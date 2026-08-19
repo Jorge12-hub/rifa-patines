@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donación Deportiva - Patines para Victoria Jiménez</title>
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --accent: #E11D48;
+            --bg: #F8FAFC;
+            --success: #16A34A;
+            --danger: #DC2626;
+            --nequi: #200020;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 520px;
+            width: 100%;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+        /* Cabecera con las dos imágenes */
+        .photo-gallery {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .photo-gallery img {
+            width: 50%;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .header-title {
+            text-align: center;
+            color: var(--primary);
+            margin: 0 0 4px 0;
+            font-size: 22px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748B;
+            font-size: 14px;
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .story-card {
+            background: #EFF6FF;
+            border-left: 5px solid var(--primary);
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            color: #1E293B;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .info-box {
+            background: #FFF1F2;
+            border: 1px solid #FECDD3;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #881337;
+            margin-bottom: 20px;
+        }
+        .info-box ul {
+            margin: 6px 0 0 0;
+            padding-left: 18px;
+        }
+        .info-box li {
+            margin-bottom: 4px;
+        }
+        .grid-title {
+            font-size: 15px;
+            text-align: center;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        .num-btn {
+            padding: 10px 0;
+            background: var(--success);
+            color: white;
+            border: none;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .num-btn.occupied {
+            background: var(--danger);
+            cursor: not-allowed;
+            opacity: 0.55;
+        }
+        .num-btn.selected {
+            outline: 3px solid #000;
+            transform: scale(1.08);
+        }
+        .form-box {
+            display: none;
+            background: #F1F5F9;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #CBD5E1;
+            margin-top: 15px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #334155;
+            margin-bottom: 4px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .nequi-details {
+            background: var(--nequi);
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            font-size: 13.5px;
+            line-height: 1.4;
+        }
+        .nequi-details span {
+            color: #FF007A;
+            font-weight: bold;
+        }
+        .btn-wa {
+            width: 100%;
+            background-color: #25D366;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Galería con las dos fotos recibidas en la cabecera -->
+    <div class="photo-gallery">
+        <img src="finalf9.jpg" alt="Jorge Noriega y Victoria Jiménez">
+        <img src="vcitoria.jpg" alt="Victoria Jiménez en Patines">
+    </div>
+
+    <h1 class="header-title">Un Sueño sobre Ruedas 🛼</h1>
+    <p class="subtitle">Donación Deportiva para Victoria Jiménez</p>
+
+    <div class="story-card">
+        Hola a todos nuestros familiares y amigos. Soy <strong>Jorge Noriega</strong> y los invito a unirse a esta donación especial en apoyo a mi hijastra <strong>Victoria Jiménez</strong>. Victoria necesita renovar su equipo con un par de <strong>patines profesionales</strong> (cuyo valor supera el $1.200.000 COP) para competir al máximo nivel en sus próximos torneos. ¡Agradecemos de corazón tu aporte voluntario para impulsar su sueño deportivo!
+    </div>
+
+    <div class="info-box">
+        <strong>Detalles de la Donación:</strong>
+        <ul>
+            <li><strong>Aporte voluntario por número:</strong> $12.000 COP</li>
+            <li><strong>Incentivo/Premio al número ganador:</strong> $400.000 COP (consignados a tu Nequi)</li>
+            <li><strong>Resultados:</strong> Con las dos (2) últimas cifras del Premio Mayor de la Lotería oficial seleccionada.</li>
+        </ul>
+    </div>
+
+    <div class="grid-title">Elije tu número disponible (00 - 99):</div>
+    <div class="grid" id="numberGrid"></div>
+
+    <div class="form-box" id="formBox">
+        <h3 style="margin-top: 0; font-size: 16px; color: var(--primary);">
+            Número Seleccionado: <span id="selectedNumText" style="color: var(--accent); font-size: 20px;">--</span>
+        </h3>
+        
+        <div class="nequi-details">
+            Realiza tu donación de <strong>$12.000 COP</strong> a:<br>
+            Nequi / Llave: <span>302 456 34 98</span><br>
+            Titular: <strong>Jorge Noriega</strong>
+        </div>
+
+        <div class="form-group">
+            <label for="userName">Tu Nombre Completo:</label>
+            <input type="text" id="userName" placeholder="Ej. María Gutiérrez">
+        </div>
+
+        <div class="form-group">
+            <label for="userNequi">Tu Número Nequi (donde recibirás el premio si ganas):</label>
+            <input type="tel" id="userNequi" placeholder="Ej. 3001234567">
+        </div>
+
+        <button class="btn-wa" onclick="enviarWhatsApp()">Confirmar Donación por WhatsApp</button>
+    </div>
+</div>
+
+<script>
+    const ADMIN_PHONE = "573024563498";
+    // Agrega aquí entre comillas los números que vayas asignando para que se marquen en rojo (Ej: ["05", "12", "33"])
+    const occupiedNumbers = []; 
+    let currentSelected = null;
+
+    function initGrid() {
+        const grid = document.getElementById('numberGrid');
+        grid.innerHTML = '';
+        for (let i = 0; i < 100; i++) {
+            const numStr = i.toString().padStart(2, '0');
+            const btn = document.createElement('button');
+            btn.className = 'num-btn';
+            btn.innerText = numStr;
+
+            if (occupiedNumbers.includes(numStr)) {
+                btn.classList.add('occupied');
+                btn.disabled = true;
+            } else {
+                btn.onclick = () => selectNumber(btn, numStr);
+            }
+            grid.appendChild(btn);
+        }
+    }
+
+    function selectNumber(element, num) {
+        document.querySelectorAll('.num-btn').forEach(b => b.classList.remove('selected'));
+        element.classList.add('selected');
+        currentSelected = num;
+        document.getElementById('selectedNumText').innerText = num;
+        document.getElementById('formBox').style.display = 'block';
+    }
+
+    function enviarWhatsApp() {
+        const name = document.getElementById('userName').value.trim();
+        const nequi = document.getElementById('userNequi').value.trim();
+
+        if (!name || !nequi) {
+            alert('Por favor ingresa tu nombre y el número Nequi donde deseas recibir el premio en caso de ganar.');
+            return;
+        }
+
+        const message = `Hola Jorge, soy *${name}*. Quiero realizar la donación con el número *${currentSelected}* para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es *${nequi}*. Adjunto mi comprobante de pago.`;
+        const encodedMsg = encodeURIComponent(message);
+        
+        window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`, '_blank');
+    }
+
+    initGrid();
+</script>
+</body>
+</html>
