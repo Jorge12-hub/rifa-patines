@@ -10,31 +10,32 @@
       --accent: #E11D48;
       --bg: #F8FAFC;
       --success: #10B981;
-      --danger: #DC2626;
+      --success-hover: #059669;
       --disabled-pink: #F43F5E;
+      --selected-blue: #2563EB;
       --nequi: #200020;
     }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f9;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: var(--bg);
+      margin: 0;
+      padding: 15px;
       display: flex;
       justify-content: center;
-      padding: 20px;
-      margin: 0;
     }
 
     .container {
-      background: white;
+      background: #ffffff;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       max-width: 500px;
       width: 100%;
       box-sizing: border-box;
     }
 
-    /* Galería e Información (del segundo código) */
+    /* Galería de fotos superiores */
     .photo-gallery {
       display: flex;
       gap: 10px;
@@ -44,10 +45,12 @@
     }
     .photo-gallery img {
       width: 50%;
-      height: 230px;
+      height: 220px;
       object-fit: cover;
       border-radius: 10px;
     }
+
+    /* Títulos e información */
     .header-title {
       text-align: center;
       color: var(--primary);
@@ -71,7 +74,6 @@
       color: #1E293B;
       margin-bottom: 16px;
       line-height: 1.5;
-      text-align: left;
     }
     .info-box {
       background: #FFF1F2;
@@ -81,7 +83,6 @@
       font-size: 13px;
       color: #881337;
       margin-bottom: 20px;
-      text-align: left;
     }
     .info-box ul {
       margin: 6px 0 0 0;
@@ -91,12 +92,20 @@
       margin-bottom: 4px;
     }
 
-    /* Grilla de números (del primer código) */
+    .grid-title {
+      font-size: 15px;
+      text-align: center;
+      color: #334155;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    /* Grilla de números */
     .grid {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 6px;
-      margin: 20px 0;
+      margin-bottom: 20px;
     }
 
     .number-btn {
@@ -106,32 +115,33 @@
       font-weight: bold;
       color: white;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 13px;
       transition: background-color 0.2s, transform 0.1s;
     }
 
     /* Estado Activo / Disponible (Verde) */
     .number-btn.active {
-      background-color: #10b981;
+      background-color: var(--success);
     }
     .number-btn.active:hover {
-      background-color: #059669;
+      background-color: var(--success-hover);
       transform: scale(1.05);
     }
 
     /* Estado Desactivado / Comprado (Rosado) */
     .number-btn.disabled {
-      background-color: #f43f5e;
+      background-color: var(--disabled-pink);
       cursor: not-allowed;
       opacity: 0.85;
     }
 
     /* Estado Seleccionado para compra (Azul) */
     .number-btn.selected {
-      background-color: #2563eb;
+      background-color: var(--selected-blue);
+      outline: 2px solid #000;
     }
 
-    /* Formulario de Confirmación y Nequi */
+    /* Formulario para compra por WhatsApp */
     .form-box {
       display: none;
       background: #F1F5F9;
@@ -139,10 +149,23 @@
       border-radius: 12px;
       border: 1px solid #CBD5E1;
       margin-top: 15px;
-      text-align: left;
+    }
+    .nequi-details {
+      background: var(--nequi);
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      font-size: 13.5px;
+      line-height: 1.4;
+    }
+    .nequi-details span {
+      color: #FF007A;
+      font-weight: bold;
     }
     .form-group {
       margin-bottom: 12px;
+      text-align: left;
     }
     .form-group label {
       display: block;
@@ -159,20 +182,6 @@
       box-sizing: border-box;
       font-size: 14px;
     }
-    .nequi-details {
-      background: var(--nequi);
-      color: #fff;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 14px;
-      font-size: 13.5px;
-      line-height: 1.4;
-      text-align: center;
-    }
-    .nequi-details span {
-      color: #FF007A;
-      font-weight: bold;
-    }
     .btn-wa {
       width: 100%;
       background-color: #25D366;
@@ -187,25 +196,23 @@
       box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
     }
 
-    /* Panel de Administración (del primer código) */
+    /* Panel de Administración */
     .admin-panel {
-      margin-top: 20px;
+      margin-top: 25px;
       padding-top: 15px;
-      border-top: 1px dashed #ccc;
+      border-top: 1px dashed #CBD5E1;
       display: flex;
       gap: 8px;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
     }
-
     .admin-panel input {
       padding: 8px;
       border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 14px;
     }
-
     .admin-btn {
       padding: 8px 12px;
       background-color: #1e3a8a;
@@ -223,12 +230,13 @@
 <body>
 
 <div class="container">
-  <!-- Sección Informativa Superior -->
+  <!-- Fotos superiores -->
   <div class="photo-gallery">
     <img src="finalf9.jpg" alt="Jorge Noriega y Victoria Jiménez">
     <img src="vcitoria.jpg" alt="Victoria Jiménez en Patines">
   </div>
 
+  <!-- Información principal -->
   <h1 class="header-title">Un Sueño sobre Ruedas 🛼</h1>
   <p class="subtitle">Donación Deportiva para Victoria Jiménez</p>
 
@@ -245,15 +253,15 @@
     </ul>
   </div>
 
-  <h3>Elije tu número disponible (00 - 99):</h3>
+  <div class="grid-title">Elije tu número disponible (00 - 99):</div>
   
   <!-- Grilla donde se generan los botones -->
   <div class="grid" id="numberGrid"></div>
 
-  <!-- Formulario de Donación por WhatsApp -->
+  <!-- Formulario desplegable para el comprador -->
   <div class="form-box" id="formBox">
-    <h3 style="margin-top: 0; font-size: 16px; color: var(--primary); text-align: center;">
-      Número Seleccionado: <span id="selectedNumText" style="color: var(--accent); font-size: 20px;">--</span>
+    <h3 style="margin-top: 0; font-size: 16px; color: var(--primary);">
+      Número Seleccionado: <span id="selectedNumText" style="color: var(--accent); font-size: 22px;">--</span>
     </h3>
     
     <div class="nequi-details">
@@ -268,7 +276,7 @@
     </div>
 
     <div class="form-group">
-      <label for="userNequi">Tu Número Nequi (donde recibirás el premio si ganas):</label>
+      <label for="userNequi">Tu Número Nequi (para recibir el premio):</label>
       <input type="tel" id="userNequi" placeholder="Ej. 3001234567">
     </div>
 
@@ -284,19 +292,29 @@
 </div>
 
 <script>
+  // Clave de administración configurada
   const ADMIN_PASSWORD = "85304564547"; 
   const ADMIN_PHONE = "573024563498";
-  let currentSelected = null;
 
-  // Generar cuadrícula de 00 a 99 al cargar
+  // NÚMEROS DESACTIVADOS DESDE EL INICIO (Comprados / Rosados)
+  const initialDisabled = ["08", "15", "44", "55"];
+
+  let selectedNum = null;
   const grid = document.getElementById('numberGrid');
 
+  // Generar cuadrícula de 00 a 99
   for (let i = 0; i <= 99; i++) {
     const numStr = i.toString().padStart(2, '0');
     const btn = document.createElement('button');
-    btn.className = 'number-btn active'; // Inician todos en verde (activos)
     btn.textContent = numStr;
     btn.dataset.number = numStr;
+
+    // Verificar si está en la lista inicial de desactivados
+    if (initialDisabled.includes(numStr)) {
+      btn.className = 'number-btn disabled';
+    } else {
+      btn.className = 'number-btn active';
+    }
 
     // Evento de selección para el usuario
     btn.addEventListener('click', () => {
@@ -305,14 +323,14 @@
         return;
       }
 
-      // Desmarcar selecciones anteriores
+      // Quitar selección previa
       document.querySelectorAll('.number-btn').forEach(b => b.classList.remove('selected'));
 
-      // Alternar selección en el botón actual
+      // Seleccionar este número
       btn.classList.add('selected');
-      currentSelected = numStr;
+      selectedNum = numStr;
 
-      // Mostrar caja de confirmación de Nequi / WhatsApp
+      // Mostrar el formulario
       document.getElementById('selectedNumText').innerText = numStr;
       document.getElementById('formBox').style.display = 'block';
     });
@@ -320,16 +338,22 @@
     grid.appendChild(btn);
   }
 
-  // Función para Activar/Desactivar números con clave (del primer código)
+  // Función para Activar/Desactivar números con clave
   function toggleNumberState() {
-    const keyInput = document.getElementById('adminKey').value;
-    const numInput = document.getElementById('targetNum').value.padStart(2, '0');
+    const keyInput = document.getElementById('adminKey').value.trim();
+    const rawVal = document.getElementById('targetNum').value.trim();
 
     if (keyInput !== ADMIN_PASSWORD) {
       alert("Clave incorrecta. No tienes permiso para modificar el estado.");
       return;
     }
 
+    if (rawVal === "") {
+      alert("Por favor ingrese un número.");
+      return;
+    }
+
+    const numInput = rawVal.padStart(2, '0');
     const btn = document.querySelector(`.number-btn[data-number="${numInput}"]`);
 
     if (!btn) {
@@ -345,31 +369,35 @@
     } else {
       btn.classList.remove('active', 'selected');
       btn.classList.add('disabled');
-      
-      // Ocultar formulario si el número seleccionado fue desactivado
-      if (currentSelected === numInput) {
-        document.getElementById('formBox').style.display = 'none';
-        currentSelected = null;
-      }
-      
       alert(`El número ${numInput} ha sido DESACTIVADO (Comprado - Rosado).`);
+
+      // Si estaba seleccionado en el formulario, ocultarlo
+      if (selectedNum === numInput) {
+        document.getElementById('formBox').style.display = 'none';
+        selectedNum = null;
+      }
     }
 
-    // Limpiar campos
+    // Limpiar campo del número
     document.getElementById('targetNum').value = '';
   }
 
-  // Función para enviar mensaje directo por WhatsApp
+  // Función para armar mensaje y enviar a WhatsApp
   function enviarWhatsApp() {
     const name = document.getElementById('userName').value.trim();
     const nequi = document.getElementById('userNequi').value.trim();
 
-    if (!name || !nequi) {
-      alert('Por favor ingresa tu nombre y el número Nequi donde deseas recibir el premio en caso de ganar.');
+    if (!selectedNum) {
+      alert('Por favor selecciona un número de la lista.');
       return;
     }
 
-    const message = `Hola Jorge, soy *${name}*. Quiero realizar la donación con el número *${currentSelected}* para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es *${nequi}*. Adjunto mi comprobante de pago.`;
+    if (!name || !nequi) {
+      alert('Por favor ingresa tu nombre y el número Nequi donde deseas recibir el premio.');
+      return;
+    }
+
+    const message = `Hola Jorge, soy *${name}*. Quiero realizar la donación con el número *${selectedNum}* para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es *${nequi}*. Adjunto mi comprobante de pago.`;
     const encodedMsg = encodeURIComponent(message);
     
     window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`, '_blank');
