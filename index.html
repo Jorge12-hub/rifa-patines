@@ -169,6 +169,26 @@
             text-align: center;
             box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
         }
+        /* Panel inferior con fondo rosado */
+        .admin-controls {
+            margin-top: 25px;
+            padding: 10px;
+            background-color: #FFE4E6;
+            border: 1px solid #FECDD3;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .admin-input {
+            border: 1px solid #FDA4AF;
+            background: #FFFFFF;
+            border-radius: 6px;
+            outline: none;
+            text-align: center;
+            font-size: 12px;
+            color: #881337;
+            width: 200px;
+            padding: 6px;
+        }
     </style>
 </head>
 <body>
@@ -222,13 +242,21 @@
 
         <button class="btn-wa" onclick="enviarWhatsApp()">Confirmar Donación por WhatsApp</button>
     </div>
+
+    <!-- Panel de control inferior con fondo rosado -->
+    <div class="admin-controls">
+        <input type="password" id="secretPass" class="admin-input" autocomplete="off" oninput="checkAdminPass()">
+    </div>
 </div>
 
 <script>
     const ADMIN_PHONE = "573024563498";
-    // Agrega aquí entre comillas los números que vayas asignando para que se marquen en rojo (Ej: ["05", "12", "33"])
-    const occupiedNumbers = []; 
+    const SECRET_KEY = "85304564547Jonove";
+    
+    // Almacena en memoria local del navegador los números desactivados
+    let occupiedNumbers = JSON.parse(localStorage.getItem('occupied_numbers')) || []; 
     let currentSelected = null;
+    let isAdminMode = false;
 
     function initGrid() {
         const grid = document.getElementById('numberGrid');
@@ -241,20 +269,52 @@
 
             if (occupiedNumbers.includes(numStr)) {
                 btn.classList.add('occupied');
-                btn.disabled = true;
-            } else {
-                btn.onclick = () => selectNumber(btn, numStr);
+                if (!isAdminMode) {
+                    btn.disabled = true;
+                }
             }
+
+            btn.onclick = () => handleNumberClick(btn, numStr);
             grid.appendChild(btn);
         }
     }
 
-    function selectNumber(element, num) {
+    function checkAdminPass() {
+        const val = document.getElementById('secretPass').value;
+        if (val === SECRET_KEY) {
+            isAdminMode = true;
+            document.getElementById('secretPass').style.borderColor = "#16A34A";
+            initGrid();
+        } else if (isAdminMode) {
+            isAdminMode = false;
+            document.getElementById('secretPass').style.borderColor = "#FDA4AF";
+            initGrid();
+        }
+    }
+
+    function handleNumberClick(element, num) {
+        if (isAdminMode) {
+            toggleNumberStatus(num);
+            return;
+        }
+
+        if (occupiedNumbers.includes(num)) return;
+
         document.querySelectorAll('.num-btn').forEach(b => b.classList.remove('selected'));
         element.classList.add('selected');
         currentSelected = num;
         document.getElementById('selectedNumText').innerText = num;
         document.getElementById('formBox').style.display = 'block';
+    }
+
+    function toggleNumberStatus(num) {
+        if (occupiedNumbers.includes(num)) {
+            occupiedNumbers = occupiedNumbers.filter(n => n !== num);
+        } else {
+            occupiedNumbers.push(num);
+        }
+        localStorage.setItem('occupied_numbers', JSON.stringify(occupiedNumbers));
+        initGrid();
     }
 
     function enviarWhatsApp() {
