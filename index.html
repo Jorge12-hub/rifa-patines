@@ -11,8 +11,12 @@
       --bg: #F8FAFC;
       --success: #10B981;
       --success-hover: #059669;
+      --pending-orange: #F59E0B;
+      --pending-hover: #D97706;
       --disabled-pink: #F43F5E;
+      --disabled-hover: #E11D48;
       --selected-blue: #2563EB;
+      --selected-hover: #1D4ED8;
       --nequi: #200020;
     }
 
@@ -128,6 +132,15 @@
       transform: scale(1.05);
     }
 
+    /* Estado Pendiente / Apartado (Naranja) */
+    .number-btn.pending {
+      background-color: var(--pending-orange);
+    }
+    .number-btn.pending:hover {
+      background-color: var(--pending-hover);
+      transform: scale(1.05);
+    }
+
     /* Estado Desactivado / Comprado (Rosado) */
     .number-btn.disabled {
       background-color: var(--disabled-pink);
@@ -135,10 +148,11 @@
       opacity: 0.85;
     }
 
-    /* Estado Seleccionado para compra (Azul) */
+    /* Estado Seleccionado / Apartado (Azul) */
     .number-btn.selected {
       background-color: var(--selected-blue);
       outline: 2px solid #000;
+      transform: scale(1.05);
     }
 
     /* Formulario para compra por WhatsApp */
@@ -184,7 +198,7 @@
     }
     .btn-wa {
       width: 100%;
-      background-color: #25D366;
+      background-color: var(--selected-blue);
       color: white;
       padding: 12px;
       border: none;
@@ -193,7 +207,11 @@
       font-size: 15px;
       cursor: pointer;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+      transition: background-color 0.2s;
+    }
+    .btn-wa:hover {
+      background-color: var(--selected-hover);
     }
 
     /* Panel de Administración */
@@ -241,19 +259,22 @@
   <p class="subtitle">Donación Deportiva para Victoria Jiménez</p>
 
   <div class="story-card">
-    Hola a todos nuestros familiares y amigos. Soy <strong>Jorge Noriega</strong> y los invito a unirse a esta donación especial en apoyo a mi hijastra <strong>Victoria Jiménez</strong>. Victoria necesita renovar su equipo con un par de <strong>patines profesionales</strong> (cuyo valor supera el $1.200.000 COP) para competir al máximo nivel en sus próximos torneos. ¡Agradecemos de corazón tu aporte voluntario para impulsar su sueño deportivo!
+    Hola a todos nuestros familiares y amigos. Soy <strong>Jorge Noriega</strong> y los invito a unirse a esta donación especial en apoyo a mi hijastra <strong>Victoria Jiménez</strong>. Victoria necesita renovar su equipo con un par de <strong>patines profesionales</strong> (cuyo valor supera el $1.200.000 COP) para competir al máximo nivel en sus próximos torneos. ¡Agradecemos de corazón tu aporte voluntario para impulsar su sueño deportivo![cite: 1]
   </div>
 
   <div class="info-box">
-    <strong>Detalles de la Donación:</strong>
+    <strong>Detalles de la Donación[cite: 1]:</strong>
     <ul>
-      <li><strong>Aporte voluntario por número:</strong> $12.000 COP</li>
-      <li><strong>Incentivo/Premio al número ganador:</strong> $400.000 COP (consignados a tu Nequi)</li>
-      <li><strong>Resultados:</strong> Con las dos (2) últimas cifras del Premio Mayor de la Lotería oficial seleccionada.</li>
+      <li><strong>Aporte voluntario por número:</strong> $12.000 COP[cite: 1]</li>
+      <li><strong>Incentivo/Premio al número ganador:</strong> $400.000 COP (consignados a tu Nequi)[cite: 1]</li>
+      <li><strong>Resultados:</strong> Con las dos (2) últimas cifras del Premio Mayor de la Lotería oficial seleccionada.[cite: 1]</li>
     </ul>
+    <div style="margin-top: 8px; font-size: 12px;">
+      🟢 <strong>Verde:</strong> Disponible | 🔵 <strong>Azul:</strong> Apartado | 🔴 <strong>Rosado:</strong> Pagado[cite: 1]
+    </div>
   </div>
 
-  <div class="grid-title">Elije tu número disponible (00 - 99):</div>
+  <div class="grid-title">Elige tu número disponible (00 - 99)[cite: 1]:</div>
   
   <!-- Grilla donde se generan los botones -->
   <div class="grid" id="numberGrid"></div>
@@ -265,7 +286,7 @@
     </h3>
     
     <div class="nequi-details">
-      Realiza tu donación de <strong>$12.000 COP</strong> a:<br>
+      Realiza tu donación de <strong>$12.000 COP</strong> a[cite: 1]:<br>
       Nequi / Llave: <span>302 456 34 98</span><br>
       Titular: <strong>Jorge Noriega</strong>
     </div>
@@ -280,7 +301,7 @@
       <input type="tel" id="userNequi" placeholder="Ej. 3001234567">
     </div>
 
-    <button class="btn-wa" onclick="enviarWhatsApp()">Confirmar Donación por WhatsApp</button>
+    <button class="btn-wa" onclick="enviarWhatsApp()">Separar Número por WhatsApp</button>
   </div>
 
   <!-- Panel inferior de administración -->
@@ -296,8 +317,23 @@
   const ADMIN_PASSWORD = "85304564547"; 
   const ADMIN_PHONE = "573024563498";
 
-  // NÚMEROS DESACTIVADOS DESDE EL INICIO (Comprados / Rosados)
-  const initialDisabled = [ "04","08", "12", "13", "15","18","23", "25","51", "44", "55", "73" , "77"];
+  // Arreglo Agente_final con los estados iniciales (incluyendo el "00" en seleccionado/azul)
+  const Agente_final = [
+    { numero: "00", estado: "selected" },
+    { numero: "04", estado: "disabled" },
+    { numero: "08", estado: "disabled" },
+    { numero: "12", estado: "disabled" },
+    { numero: "13", estado: "disabled" },
+    { numero: "15", estado: "disabled" },
+    { numero: "18", estado: "disabled" },
+    { numero: "23", estado: "disabled" },
+    { numero: "25", estado: "disabled" },
+    { numero: "44", estado: "disabled" },
+    { numero: "51", estado: "disabled" },
+    { numero: "55", estado: "disabled" },
+    { numero: "73", estado: "disabled" },
+    { numero: "77", estado: "disabled" }
+  ];
 
   let selectedNum = null;
   const grid = document.getElementById('numberGrid');
@@ -309,25 +345,48 @@
     btn.textContent = numStr;
     btn.dataset.number = numStr;
 
-    // Verificar si está en la lista inicial de desactivados
-    if (initialDisabled.includes(numStr)) {
-      btn.className = 'number-btn disabled';
+    // Buscar si el número está definido en Agente_final
+    const itemEncontrado = Agente_final.find(item => item.numero === numStr);
+
+    if (itemEncontrado) {
+      btn.className = `number-btn ${itemEncontrado.estado}`;
     } else {
       btn.className = 'number-btn active';
     }
 
     // Evento de selección para el usuario
     btn.addEventListener('click', () => {
+      // Si el número está apartado (azul/selected)
+      if (btn.classList.contains('selected')) {
+        alert(`El número ${numStr} ya fue separado, por favor elija otro.`);
+        return;
+      }
+      // Si el número ya fue pagado (rosado/disabled)
       if (btn.classList.contains('disabled')) {
-        alert(`El número ${numStr} está desactivado o ya fue comprado.`);
+        alert(`El número ${numStr} ya fue pagado y confirmado.`);
+        return;
+      }
+      // Si el número está pendiente (naranja)
+      if (btn.classList.contains('pending')) {
+        alert(`El número ${numStr} se encuentra pendiente de pago.`);
         return;
       }
 
-      // Quitar selección previa
-      document.querySelectorAll('.number-btn').forEach(b => b.classList.remove('selected'));
+      // Quitar selección previa solo de los disponibles
+      document.querySelectorAll('.number-btn').forEach(b => {
+        if (!b.classList.contains('disabled') && !b.classList.contains('pending') && !b.classList.contains('selected')) {
+          b.classList.remove('selected-user');
+        }
+      });
 
-      // Seleccionar este número
-      btn.classList.add('selected');
+      // Marcar temporalmente el número que el usuario está eligiendo
+      document.querySelectorAll('.number-btn').forEach(b => {
+        if (b.classList.contains('user-choosing')) {
+          b.classList.remove('user-choosing');
+        }
+      });
+
+      btn.classList.add('user-choosing', 'selected');
       selectedNum = numStr;
 
       // Mostrar el formulario
@@ -338,7 +397,7 @@
     grid.appendChild(btn);
   }
 
-  // Función para Activar/Desactivar números con clave
+  // Función para cambiar cíclicamente los estados con clave de admin
   function toggleNumberState() {
     const keyInput = document.getElementById('adminKey').value.trim();
     const rawVal = document.getElementById('targetNum').value.trim();
@@ -361,43 +420,31 @@
       return;
     }
 
-    // Alternar entre activo (verde) y desactivado/rosado
-    if (btn.classList.contains('disabled')) {
+    if (btn.classList.contains('active')) {
+      btn.classList.remove('active');
+      btn.classList.add('selected');
+      alert(`El número ${numInput} pasó a APARTADO (Azul).`);
+    } else if (btn.classList.contains('selected')) {
+      btn.classList.remove('selected');
+      btn.classList.add('disabled');
+      alert(`El número ${numInput} pasó a PAGADO (Rosado).`);
+    } else {
       btn.classList.remove('disabled');
       btn.classList.add('active');
-      alert(`El número ${numInput} ha sido ACTIVADO (Disponible - Verde).`);
-    } else {
-      btn.classList.remove('active', 'selected');
-      btn.classList.add('disabled');
-      alert(`El número ${numInput} ha sido DESACTIVADO (Comprado - Rosado).`);
-
-      // Si estaba seleccionado en el formulario, ocultarlo
-      if (selectedNum === numInput) {
-        document.getElementById('formBox').style.display = 'none';
-        selectedNum = null;
-      }
+      alert(`El número ${numInput} está LIBRE (Verde).`);
     }
 
-    // Limpiar campo del número
     document.getElementById('targetNum').value = '';
   }
 
-  // Función para armar mensaje y enviar a WhatsApp
+  // Función para armar mensaje personalizado y enviar a WhatsApp
   function enviarWhatsApp() {
-    const name = document.getElementById('userName').value.trim();
-    const nequi = document.getElementById('userNequi').value.trim();
-
     if (!selectedNum) {
-      alert('Por favor selecciona un número de la lista.');
+      alert("Por favor seleccione un número disponible primero.");
       return;
     }
-
-    if (!name || !nequi) {
-      alert('Por favor ingresa tu nombre y el número Nequi donde deseas recibir el premio.');
-      return;
-    }
-
-    const message = `Hola Jorge, soy *${name}*. Quiero realizar la donación con el número *${selectedNum}* para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es *${nequi}*. Adjunto mi comprobante de pago.`;
+    
+    const message = `Hola Jorge, soy jorge noriega. Quiero separar el lel número ${selectedNum} para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es 3024563498. Adjunto mi comprobante de pago.`;
     const encodedMsg = encodeURIComponent(message);
     
     window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`, '_blank');
