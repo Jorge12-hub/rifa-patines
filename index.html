@@ -446,8 +446,9 @@
       return;
     }
     
-    const message = `Hola Jorge, soy *${name}*. Quiero separar el lel número ${selectedNum} para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es 3024563498. Adjunto mi comprobante de pago.`;
-    *${nequi}*;
+    const message = `Hola Jorge, soy *${name}*. Quiero separar el lel número ${selectedNum} para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es *${nequi}*. Adjunto mi comprobante de pago.`;
+    const encodedMsg = encodeURIComponent(message);
+    
     
     window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`, '_blank');
   }
