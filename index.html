@@ -317,9 +317,9 @@
   const ADMIN_PASSWORD = "85304564547"; 
   const ADMIN_PHONE = "573024563498";
 
-  // Arreglo Agente_final con los estados iniciales (incluyendo el "00" en seleccionado/azul)
+  // Arreglo Agente_final con los estados iniciales
   const Agente_final = [
-   { numero: "04", estado: "selected" },
+    { numero: "04", estado: "selected" },
     { numero: "08", estado: "selected" },
     { numero: "12", estado: "disabled" },
     { numero: "13", estado: "selected" },
@@ -347,7 +347,6 @@
     btn.textContent = numStr;
     btn.dataset.number = numStr;
 
-    // Buscar si el número está definido en Agente_final
     const itemEncontrado = Agente_final.find(item => item.numero === numStr);
 
     if (itemEncontrado) {
@@ -356,32 +355,20 @@
       btn.className = 'number-btn active';
     }
 
-    // Evento de selección para el usuario
     btn.addEventListener('click', () => {
-      // Si el número está apartado (azul/selected)
       if (btn.classList.contains('selected')) {
         alert(`El número ${numStr} ya fue separado, por favor elija otro.`);
         return;
       }
-      // Si el número ya fue pagado (rosado/disabled)
       if (btn.classList.contains('disabled')) {
         alert(`El número ${numStr} ya fue pagado y confirmado.`);
         return;
       }
-      // Si el número está pendiente (naranja)
       if (btn.classList.contains('pending')) {
         alert(`El número ${numStr} se encuentra pendiente de pago.`);
         return;
       }
 
-      // Quitar selección previa solo de los disponibles
-      document.querySelectorAll('.number-btn').forEach(b => {
-        if (!b.classList.contains('disabled') && !b.classList.contains('pending') && !b.classList.contains('selected')) {
-          b.classList.remove('selected-user');
-        }
-      });
-
-      // Marcar temporalmente el número que el usuario está eligiendo
       document.querySelectorAll('.number-btn').forEach(b => {
         if (b.classList.contains('user-choosing')) {
           b.classList.remove('user-choosing');
@@ -391,7 +378,6 @@
       btn.classList.add('user-choosing', 'selected');
       selectedNum = numStr;
 
-      // Mostrar el formulario
       document.getElementById('selectedNumText').innerText = numStr;
       document.getElementById('formBox').style.display = 'block';
     });
@@ -439,16 +425,23 @@
     document.getElementById('targetNum').value = '';
   }
 
-  // Función para armar mensaje personalizado y enviar a WhatsApp
+  // Función corregida para capturar los inputs y armar el mensaje automático de WhatsApp
   function enviarWhatsApp() {
     if (!selectedNum) {
       alert("Por favor seleccione un número disponible primero.");
       return;
     }
     
-    const message = `Hola Jorge, soy *${name}*. Quiero separar el lel número ${selectedNum} para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es *${nequi}*. Adjunto mi comprobante de pago.`;
-    const encodedMsg = encodeURIComponent(message);
+    const userName = document.getElementById('userName').value.trim();
+    const userNequi = document.getElementById('userNequi').value.trim();
+
+    if (!userName || !userNequi) {
+      alert("Por favor completa tu nombre y tu número Nequi.");
+      return;
+    }
     
+    const message = `Hola Jorge, soy *${userName}*. Quiero separar el número *${selectedNum}* para apoyar a Victoria. Mi Nequi para recibir el premio en caso de ganar es *${userNequi}*. Adjunto mi comprobante de pago.`;
+    const encodedMsg = encodeURIComponent(message);
     
     window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`, '_blank');
   }
